@@ -3,11 +3,15 @@
   become: yes
   vars:
     - APP_NAME: flaskapp
-    - REPOSITORY_URL: https://github.com/TraceOnBrainOff/ceneo_scrapper.git
+    - REPOSITORY_URL: https://github.com/TraceOnBrainOff/hello_flask.git
   tasks:
     - name: "Install required dependencies"
       yum:
         name: python3, python3-pip, git
+    - name: "Remove previous repo"
+      file:
+        state: absent
+        path: "/opt/{{APP_NAME}}"
     - name: "Download repository"
       git:
         repo: "{{REPOSITORY_URL}}"
